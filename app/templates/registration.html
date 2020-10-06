@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block content%}
+  	<div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6 text-center">
+            <h1 class="h3 mb-3 font-weight-normal">Регистрация</h1>
+<!--                <form class="form-signin">-->
+<!--                    <h1 class="h3 mb-3 font-weight-normal">Регистрация</h1>-->
+<!--                    <input type="text" id="login" name="login" class="form-control mt-1" required autofocus placeholder="Ваше имя (логин)">-->
+<!--                    <input type="text" id="apartment" name="apartment" class="form-control mt-1" placeholder="Номер квартиры" required>-->
+<!--                    <input type="email" id="email" name="email" class="form-control mb-1 mt-1" required placeholder="Ваш Email">-->
+<!--                    <input type="text" id="phone_number" name="phone_number" class="form-control mt-1" required placeholder="Номер телефона">-->
+<!--                    <input type="password" id="password" name="password" class="form-control mt-1" required placeholder="Придумайте пароль">-->
+<!--                    <button class="btn btn-block btn-lg btn-primary mt-3" type="submit">Зарегистрировать</button>-->
+<!--                </form>-->
+            {{ wtf.quick_form(form) }}
+            </div>
+            <div class="col-md-3"></div>
+         </div>
+    </div>
+{% endblock%}
