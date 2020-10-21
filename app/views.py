@@ -1,9 +1,9 @@
 from app import app, db
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, flash
 from flask_login import login_required, login_user, current_user, logout_user
-from app.forms import Registration, Authorization, AdminsPost
+from app.forms import Registration, Authorization, AdminsPost, SendEmail
 from app.models import Owner, reg_owner, create_post
-from app.utils import cookies
+from app.utils import cookies, send_mail
 
 
 @app.route('/')
@@ -26,6 +26,7 @@ def admin():
         return redirect(url_for('login'))
 
 
+@app.route('/cabinet')
 @app.route('/cabinet/<id>', methods=['GET', 'POST'])
 @login_required
 def cabinet(id):
@@ -78,6 +79,21 @@ def regist():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+@app.route('/send_message', methods=['GET', 'POST'])
+def send_message():
+    form = SendEmail()
+    if form.validate_on_submit():
+        email = form.email.data
+        text = f'Пользователь с email {email} пишет: \n' + form.text.data
+        html = f'<h1>Письмо</h1><p>{text}</p>'
+        recipients = ['alexmixpetrov@gmail.com']
+        send_mail('Письмо от пользователя', sender='alexmixpetrov@yandex.ru', recipients=recipients, text=text,
+                  html=html)
+        flash('Письмо отправлено!')
+        return redirect(url_for('index'))
+    return render_template('send_message.html', form=form)
 
 
 @app.errorhandler(404)
