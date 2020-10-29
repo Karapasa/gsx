@@ -1,9 +1,10 @@
-from app import app, db
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_required, login_user, current_user, logout_user
-from app.forms import Registration, Authorization, AdminsPost, SendEmail
+
+from app import app, db
+from app.forms import Registration, Authorization, AdminsPost, SendEmail, ResetPasswordRequestForm, ResetPasswordForm
 from app.models import Owner, reg_owner, create_post
-from app.utils import cookies, send_mail
+from app.utils import send_mail, send_password_reset_email
 
 
 @app.route('/')
@@ -99,3 +100,33 @@ def send_message():
 @app.errorhandler(404)
 def not_found_error(error):
     return render_template('page_404.html'), 404
+
+
+@app.route('/reset_password_request', methods=['GET', 'POST'])
+def reset_password_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = ResetPasswordRequestForm()
+    if form.validate_on_submit():
+        user = Owner.query.filter_by(email=form.email.data).first()
+        if user:
+            send_password_reset_email(user)
+        flash('Мы отправили Вам на почту инструкцию по смене пароля')
+        return redirect(url_for('login'))
+    return render_template('reset_password_request.html', form=form)
+
+
+@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    user = Owner.verify_reset_password_token(token)
+    if not user:
+        return redirect(url_for('index'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        flash('Ваш пароль обновлен')
+        return redirect(url_for('login'))
+    return render_template('reset_password.html', form=form)
