@@ -87,11 +87,10 @@ def send_message():
     form = SendEmail()
     if form.validate_on_submit():
         email = form.email.data
-        text = f'Пользователь с email {email} пишет: \n' + form.text.data
-        html = f'<h1>Письмо</h1><p>{text}</p>'
+        text = form.text.data
+        text_msg = f'<p>Пользователь {email} пишет: <br><p>{text}</p>'
         recipients = ['alexmixpetrov@gmail.com']
-        send_mail('Письмо от пользователя', sender='alexmixpetrov@yandex.ru', recipients=recipients, text=text,
-                  html=html)
+        send_mail(recipients=recipients, text_msg=text_msg)
         flash('Письмо отправлено!')
         return redirect(url_for('index'))
     return render_template('send_message.html', form=form)
