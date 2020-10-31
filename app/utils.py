@@ -20,7 +20,6 @@ def async_send_mail(sender, recipients, msg):
     server.login(app.config['MAIL_DEFAULT_SENDER'], app.config['MAIL_PASSWORD'])
     server.sendmail(sender, recipients, msg.as_bytes())
     server.quit()
-    print('Письмо отправлено!')
 
 
 def send_mail(subject='Письмо от администрации Flask-GSX', sender='alexmixpetrov@yandex.ru', recipients=[],
@@ -37,9 +36,6 @@ def send_mail(subject='Письмо от администрации Flask-GSX', 
 
 def send_password_reset_email(user):
     token = user.get_reset_password_token()
-    send_mail('[GSH] Обновление вашего пароля',
+    send_mail(subject='[GSH] Обновление вашего пароля',
               recipients=[user.email],
-              text_body=render_template('email/reset_password.txt',
-                                        user=user, token=token),
-              html_body=render_template('email/reset_password.html',
-                                        user=user, token=token))
+              text_msg=f'<p>Чтобы сбросить пароль пройдите по <a href=http://127.0.0.1:5000/reset_password/{token}>ссылке</a></p>')
