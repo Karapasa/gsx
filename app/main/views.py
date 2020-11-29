@@ -69,7 +69,7 @@ def regist():
         password = reg_form.password.data
         try:
             reg_owner(login=login, email=email, phone_number=phone_number, apartment=apartment, password=password)
-            return redirect('.login')
+            return redirect(url_for('.login'))
         except:
             return 'Что-то пошло не так! Попробуйте еще раз'
 

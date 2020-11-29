@@ -2,3 +2,4 @@ testdb.db
 testing.py
 /migrations
 /venv
+.env
