@@ -1,9 +1,10 @@
-from flask import render_template, current_app, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash
 from flask_login import login_required, login_user, current_user, logout_user
 
 from app import db
 from . import main
-from app.main.forms import Registration, Authorization, AdminsPost, SendEmail, ResetPasswordRequestForm, ResetPasswordForm
+from app.main.forms import Registration, Authorization, AdminsPost, SendEmail, ResetPasswordRequestForm, \
+    ResetPasswordForm
 from app.models import Owner, reg_owner, create_post
 from app.utils import send_mail, send_password_reset_email
 
@@ -95,11 +96,6 @@ def send_message():
         flash('Письмо отправлено!')
         return redirect(url_for('.index'))
     return render_template('send_message.html', form=form)
-
-
-@main.errorhandler(404)
-def not_found_error(error):
-    return render_template('page_404.html'), 404
 
 
 @main.route('/reset_password_request', methods=['GET', 'POST'])

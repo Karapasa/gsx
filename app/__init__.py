@@ -27,4 +27,7 @@ def create_app(config_class=BaseConfig):
     from .main import main as main_bp
     app.register_blueprint(main_bp)
 
+    from .errors import err as err_bp
+    app.register_blueprint(err_bp)
+
     return app
