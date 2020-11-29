@@ -2,10 +2,10 @@ from time import time
 
 import jwt
 from flask_login import UserMixin
+from flask import current_app
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from app import app, db, loginmanager
-
+from app import db, loginmanager
 
 @loginmanager.user_loader
 def load_user(id):
@@ -31,12 +31,12 @@ class Owner(db.Model, UserMixin):
 
     def get_reset_password_token(self, expires_in=600):
         return jwt.encode({'reset_password': self.id, 'exp': time() + expires_in},
-                          app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
+                          current_app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
 
     @staticmethod
     def verify_reset_password_token(token):
         try:
-            id = jwt.decode(token, app.config['SECRET_KEY'],
+            id = jwt.decode(token, current_app.config['SECRET_KEY'],
                             algorithms=['HS256'])['reset_password']
         except:
             return
@@ -69,6 +69,3 @@ def create_post(header, htmltext):
     post = Post(header=header, htmltext=htmltext)
     db.session.add(post)
     db.session.commit()
-
-
-db.create_all()

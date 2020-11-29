@@ -1,18 +1,30 @@
 from flask import Flask
-from config import BaseConfig, TestConfig
+from config import BaseConfig
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_mail import Mail
 
-app = Flask(__name__)
-bootstrap = Bootstrap(app)
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-loginmanager = LoginManager(app)
-loginmanager.login_view = 'login'
-mail = Mail(app)
-app.config.from_object(TestConfig)
+bootstrap = Bootstrap()
+db = SQLAlchemy()
+migrate = Migrate()
+loginmanager = LoginManager()
+loginmanager.login_view = 'main.login'
+mail = Mail()
 
-from app import views, models
+
+def create_app(config_class=BaseConfig):
+    app = Flask(__name__)
+    app.config.from_object(config_class)
+
+    db.init_app(app)
+    bootstrap.init_app(app)
+    migrate.init_app(app, db)
+    loginmanager.init_app(app)
+    mail.init_app(app)
+
+    from .main import main as main_bp
+    app.register_blueprint(main_bp)
+
+    return app

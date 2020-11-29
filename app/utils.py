@@ -3,9 +3,9 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from threading import Thread
 
-from flask import make_response, render_template
+from flask import make_response, current_app
 
-from app import app, db
+from app import db
 from app.models import Owner
 
 
@@ -17,7 +17,7 @@ def cookies():
 
 def async_send_mail(sender, recipients, msg):
     server = smtplib.SMTP_SSL('smtp.yandex.ru', 465)
-    server.login(app.config['MAIL_DEFAULT_SENDER'], app.config['MAIL_PASSWORD'])
+    server.login(current_app.config['MAIL_DEFAULT_SENDER'], current_app.config['MAIL_PASSWORD'])
     server.sendmail(sender, recipients, msg.as_bytes())
     server.quit()
 
