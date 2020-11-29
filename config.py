@@ -9,7 +9,7 @@ class BaseConfig(object):
     MAIL_PORT = 465
     MAIL_USE_TSL = True
     MAIL_USERNAME = 'alexmixpetrov@yandex.ru'
-    MAIL_PASSWORD = '03Dik0braZ02'
+    MAIL_PASSWORD = ''
     MAIL_DEFAULT_SENDER = 'alexmixpetrov@yandex.ru'
 
 
@@ -21,5 +21,5 @@ class TestConfig(object):
     MAIL_PORT = 465
     MAIL_USE_TSL = True
     MAIL_USERNAME = 'alexmixpetrov@yandex.ru'
-    MAIL_PASSWORD = '03Dik0braZ02'
+    MAIL_PASSWORD = ''
     MAIL_DEFAULT_SENDER = 'alexmixpetrov@yandex.ru'
