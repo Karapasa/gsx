@@ -3,3 +3,4 @@ testing.py
 /migrations
 /venv
 .env
+__pycache__/
