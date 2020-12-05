@@ -15,9 +15,9 @@ def cookies():
     res.set_cookie("id", user_id, 60 * 60 * 24 * 15)
 
 
-def async_send_mail(sender, recipients, msg):
+def async_send_mail(app, sender, recipients, msg):
     server = smtplib.SMTP_SSL('smtp.yandex.ru', 465)
-    server.login(current_app.config['MAIL_DEFAULT_SENDER'], current_app.config['MAIL_PASSWORD'])
+    server.login(app.config['MAIL_DEFAULT_SENDER'], app.config['MAIL_PASSWORD'])
     server.sendmail(sender, recipients, msg.as_bytes())
     server.quit()
 
@@ -31,7 +31,7 @@ def send_mail(subject='Письмо от администрации Flask-GSX', 
     text = f'<html><head></head><body><h2>Добрый день!</h2><div>{text_msg}</div></body></html>'
     html_text = MIMEText(text, 'html')
     msg.attach(html_text)
-    Thread(target=async_send_mail, args=[sender, recipients, msg]).start()
+    Thread(target=async_send_mail, args=[current_app._get_current_object(), sender, recipients, msg]).start()
 
 
 def send_password_reset_email(user):

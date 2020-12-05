@@ -3,7 +3,7 @@
 <h1>САЙТ ЖСК</h1>
 <p><a href="/login">Авторизация</a></p>
 <p><a href="/registration">Регистрация</a></p>
-<p><a href="/cabinet">Личный кабинет</a></p>
+<p><a href="{{ url_for('main.cabinet', id = current_user.get_id() or 0) }}">Личный кабинет</a></p>
 <p><a href="/admin">Админ панель</a></p>
 <p><a href="/send_message">Отправить письмо</a></p>
 {% endblock%}
