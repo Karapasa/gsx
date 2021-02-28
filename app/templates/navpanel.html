@@ -1,0 +1,13 @@
+<div class="container navv">
+    <div class="row m-4">
+        <div class="d-flex flex-row p-2">
+            {% if user.is_authenticated %}
+            <div class="p-2"><a href="{{ url_for('main.cabinet', id = current_user.get_id() or 0) }}"><strong>ЛИЧНЫЙ КАБИНЕТ</strong></a></div>
+            <div class="p-2"><a href="/send_message"><strong>ОТПРАВИТЬ ПИСЬМО</strong></a></div>
+            {% else %}
+            <div class="p-2"><a href="/login"><strong>АВТОРИЗАЦИЯ</strong></a></div>
+            <div class="p-2"><a href="/registration"><strong>РЕГИСТРАЦИЯ</strong></a></div>
+            {% endif %}
+        </div>
+    </div>
+</div>

@@ -1,6 +1,5 @@
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_required, current_user, logout_user
-
 from app.main.forms import SendEmail
 from app.utils import send_mail
 from . import main
@@ -9,7 +8,7 @@ from . import main
 @main.route('/')
 @main.route('/index')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', user=current_user)
 
 
 @main.route('/cabinet/<int:id>', methods=['GET', 'POST'])
@@ -17,7 +16,7 @@ def index():
 def cabinet(id):
     if current_user.is_authenticated:
         if id == int(current_user.get_id()):
-            return render_template('cabinet.html', user_id=id)
+            return render_template('cabinet.html', user_id=id, user=current_user)
         else:
             return f"ДОСТУП ЗАПРЕЩЕН!    ТЫ ЧЕГО СЕБЕ ПОЗВОЛЯЕШЬ?!    Я ЗНАЮ ТВОЙ IP! ЗА ТОБОЙ ВЫЕХАЛИ!"
     else:
@@ -26,7 +25,7 @@ def cabinet(id):
 
 @main.route('/page')
 def page():
-    return render_template('page.html')
+    return render_template('page.html', user=current_user)
 
 
 @main.route('/logout')

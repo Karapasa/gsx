@@ -1,5 +1,5 @@
 from flask import Flask
-from config import BaseConfig
+from config import BaseConfig, TestConfig
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -14,7 +14,7 @@ loginmanager.login_view = 'auth.login'
 mail = Mail()
 
 
-def create_app(config_class=BaseConfig):
+def create_app(config_class=TestConfig):
     app = Flask(__name__)
     app.config.from_object(config_class)
 

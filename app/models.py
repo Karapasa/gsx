@@ -62,10 +62,13 @@ class Post(db.Model):
     __tablename__ = 'posts'
     id = db.Column(db.Integer(), primary_key=True)
     header = db.Column(db.String(), nullable=False)
+    tag = db.Column(db.Text())
+    cardtext = db.Column(db.Text())
     htmltext = db.Column(db.Text())
+    date = db.Column(db.Date())
 
 
-def create_post(header, htmltext):
-    post = Post(header=header, htmltext=htmltext)
+def create_post(**kwargs):
+    post = Post(**kwargs)
     db.session.add(post)
     db.session.commit()
