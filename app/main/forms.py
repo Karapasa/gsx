@@ -17,5 +17,5 @@ class SendIndicationWater(FlaskForm):
 
 class SendEmail(FlaskForm):
     email = StringField('Ваш email: ', validators=[DataRequired()])
-    text = StringField('Ваше сообщение: ', validators=[DataRequired()])
+    text = TextAreaField('Ваше сообщение: ', validators=[DataRequired()])
     submit = SubmitField('Отправить')

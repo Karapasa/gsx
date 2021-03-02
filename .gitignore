@@ -1,7 +1,6 @@
 testdb.db
 testing.py
 test.py
-/migrations
 venv/
 /venv
 .env

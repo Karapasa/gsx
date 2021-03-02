@@ -2,39 +2,26 @@
 {% block nav %} {% include 'navpanel.html' %} {% endblock %}
 {% block content%}
 <div class="container">
-    <div class="row m-4">
-        <div class="card p-0">
-            <h5 class="card-header bg-head text-warning">
-                Объявление
-            </h5>
-            <div class="card-body">
-                <h5 class="card-title">Включена новая повестка на будущее собрание жильцов</h5>
-                <p class="card-text">В связи с необходимости ремонта лифтов в ближайшее время. Будет поставлен вопрос о ремонте или полной замене на новые.</p>
-                <a href="#" class="btn btn-warning btn-sm">Подробнее</a>
-            </div>
-            <div class="card-footer bg-white text-muted border-0">
-                (дата объявления)
-            </div>
-        </div>
-    </div>
-
+    {% for post in posts%}
         <div class="row m-4">
-        <div class="card text p-0">
+            <div class="card p-0">
                 <h5 class="card-header bg-head text-warning">
-                    Опрос
+                    {{ post.tag }}
                 </h5>
             <div class="card-body">
-                <h5 class="card-title">Голосование по вопросу установки камер в лифте</h5>
-                <p class="card-text">Появилась новая услуга от компании, которая обслуживает наши лифты на новую услугу по установке камер.</p>
-                <a href="#" class="btn btn-warning btn-sm">Подробнее</a>
+                <h5 class="card-title">{{ post.header }}</h5>
+                <p class="card-text">{{ post.cardtext }}</p>
+                {% if post.htmltext %}
+                    <a href="{{ url_for('main.page', url=post.url) }}" class="btn btn-warning btn-sm">Подробнее</a>
+                {% endif %}
             </div>
             <div class="card-footer bg-white text-muted border-0">
-                (дата объявления)
+                {{ post.date }}
+            </div>
             </div>
         </div>
-    </div>
+    {% endfor %}
 </div>
-
 <div class="container">
     <div class="row m-4">
         <nav aria-label="Page navigation example">

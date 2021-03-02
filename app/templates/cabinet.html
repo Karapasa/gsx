@@ -1,5 +1,14 @@
 {% extends 'base.html' %}
 {% block content%}
-<h1>Личный кабинет</h1>
-<p>Ваш id: {{ user_id }}</p>
+<div class="container">
+    <div class="row m-4">
+        <h1>Личный кабинет</h1>
+        <p>Ваш логин: {{ cur_user.login }} | Квартира: №{{ cur_user.apartment }}</p>
+        <p>Ваш email: {{ cur_user.email }}</p>
+        <p>Тел. для связи: {{ cur_user.phone_number }}</p>
+    </div>
+    <div class="row m-4">
+        <a href="{{ url_for('main.logout') }}">ВЫЙТИ</a>
+    </div>
+</div>
 {% endblock%}

@@ -19,7 +19,7 @@ def login():
                 return redirect(url_for('main.cabinet', id=user.id))
             elif user.role == 1:
                 login_user(user, remember=False)
-                return redirect(url_for('main.admin'))
+                return redirect(url_for('admin.admin'))
     return render_template('auth/login.html', form=form)
 
 

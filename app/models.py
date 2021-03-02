@@ -1,6 +1,8 @@
 from time import time
+from datetime import datetime
 
 import jwt
+import pytz
 from flask_login import UserMixin
 from flask import current_app
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -42,6 +44,8 @@ class Owner(db.Model, UserMixin):
             return
         return Owner.query.get(id)
 
+    def __repr__(self):
+        return f'Owner {self.login}'
 
 def reg_owner(login, email, phone_number, apartment, password):
     u = Owner(login=login, email=email, phone_number=phone_number, apartment=apartment)
@@ -62,13 +66,18 @@ class Post(db.Model):
     __tablename__ = 'posts'
     id = db.Column(db.Integer(), primary_key=True)
     header = db.Column(db.String(), nullable=False)
+    url = db.Column(db.String(), default=id)
     tag = db.Column(db.Text())
     cardtext = db.Column(db.Text())
     htmltext = db.Column(db.Text())
-    date = db.Column(db.Date())
+    date = db.Column(db.DateTime(), default=datetime.now(tz=pytz.timezone('Europe/Moscow')))
+
+    def __repr__(self):
+        return f'Post {self.header}'
 
 
-def create_post(**kwargs):
-    post = Post(**kwargs)
+def create_post(datas):
+    del datas['csrf_token']
+    post = Post(**datas)
     db.session.add(post)
     db.session.commit()

@@ -19,5 +19,6 @@ class BaseConfig(object):
 
 class TestConfig(BaseConfig):
     DEBUG = True
+    FLASK_DEBUG = 1
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'testdb.db')
-    SQLALCHEMY_TRACK_MODIFICATION = False
+    SQLALCHEMY_TRACK_MODIFICATION = True

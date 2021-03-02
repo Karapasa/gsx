@@ -12,9 +12,7 @@ from . import admin_panel
 def admin():
     form = AdminsPost()
     if form.validate_on_submit():
-        header = form.head.data
-        htmltext = form.posts_html.data
-        create_post(header, htmltext)
+        create_post(form.data)
     if current_user.is_authenticated and db.session.query(Owner).filter(Owner.role == 1).first():
         return render_template('admin/admin.html', form=form)
     else:
