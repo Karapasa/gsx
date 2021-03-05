@@ -10,8 +10,8 @@ class FormSendMail(FlaskForm):
 
 
 class SendIndicationWater(FlaskForm):
-    cold_water = IntegerField('Холодная вода', validators=[DataRequired()])
-    hot_water = IntegerField('Горячая вода', validators=[DataRequired()])
+    cold = IntegerField('Холодная вода', validators=[DataRequired()])
+    hot = IntegerField('Горячая вода', validators=[DataRequired()])
     submit = SubmitField('Отправить показания')
 
 

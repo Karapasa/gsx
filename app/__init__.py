@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_mail import Mail
+from flask_babel import Babel
 
 bootstrap = Bootstrap()
 db = SQLAlchemy()
@@ -12,6 +13,7 @@ migrate = Migrate()
 loginmanager = LoginManager()
 loginmanager.login_view = 'auth.login'
 mail = Mail()
+babel = Babel()
 
 
 def create_app(config_class=TestConfig):
@@ -23,6 +25,7 @@ def create_app(config_class=TestConfig):
     migrate.init_app(app, db)
     loginmanager.init_app(app)
     mail.init_app(app)
+    babel.init_app(app)
 
     from .main import main as main_bp
     app.register_blueprint(main_bp)

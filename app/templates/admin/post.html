@@ -1,0 +1,28 @@
+{% extends 'admin/admin_base.html' %}
+{% block menu %} {% include 'admin/admin_menu.html' %} {% endblock %}
+{% block admin_content %}
+<div class="row">
+<h3>Страница №{{post.id}}:</h3>
+<form action="" method="post" id="form_admin_indicator">
+	<label for="form_admin_post_header"><strong>Заголовок:</strong></label><br>
+	<input type="text" value="{{ post.header }}" id="form_admin_post_header"><br>
+
+	<label for="form_admin_post_url"><strong>URL:</strong></label><br>
+	<input type="text" value="{{ post.url }}" id="form_admin_post_url"><br>
+
+	<label for="form_admin_post_tag"><strong>Тип</strong></label><br>
+	<input type="text" value={{post.tag}} id="form_admin_post_tag"><br>
+
+	<label for="form_admin_post_cardtext"><strong>Превью:</strong></label><br>
+	<textarea value="{{ post.cardtext }}" id="form_admin_post_cardtext"></textarea><br>
+
+	<label for="form_admin_post_html"><strong>HTML</strong></label><br>
+	<textarea value="{{ post.htmltext }}" id="form_admin_post_html"></textarea><br>
+
+	<label for="form_admin_post_date"><strong>Дата:</strong></label><br>
+	<input type="text" value="{{ post.date }}" id="form_admin_post_date"><br>
+
+	<input id="btn_post_admin" class="button" type="button" value="Сохранить изменения">
+</form>
+</div
+{% endblock %}

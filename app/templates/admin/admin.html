@@ -1,48 +1,17 @@
-{% extends 'base.html' %}
+{% extends 'admin/admin_base.html' %}
 {% import 'bootstrap/wtf.html' as wtf %}
-{% block content%}
-<div class="container">
-    <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-            <h1>Административная панель</h1>
-<!--            {{ wtf.quick_form(form) }}-->
-<!--               <form class="form-signin">-->
-<!--                    <input type="text" id="tag" name="tag" class="form-control mt-1" autofocus placeholder="Ваше имя (логин)">-->
-<!--                    <input type="text" id="header" name="header" class="form-control mt-1" placeholder="Номер квартиры">-->
-<!--                    <input type="email" id="url" name="url" class="form-control mb-1 mt-1" placeholder="Ваш Email">-->
-<!--                    <input type="text" id="cardtext" name="cardtext" class="form-control mt-1" placeholder="Номер телефона">-->
-<!--                    <input type="htmltext" id="htmltext" name="password" class="form-control mt-1" placeholder="Придумайте пароль">-->
-<!--                    <button class="btn btn-block btn-lg btn-primary mt-3" type="submit">Зарегистрировать</button>-->
-<!--                </form>-->
-                <form class="form-signin" action="" method="post">
-<!--                    {{ form.hidden_tag() }}-->
-                    {{ form.csrf_token }}
-                    <p>
-                        {{ form.tag.label }}<br>
-                        {{ form.tag(size=32) }}<br>
-                    </p>
-                    <p>
-                        {{ form.header.label }}<br>
-                        {{ form.header(size=32) }}<br>
-                    </p>
-                    <p>
-                        {{ form.url.label }}<br>
-                        {{ form.url(size=32) }}<br>
-                    </p>
-                    <p>
-                        {{ form.cardtext.label }}<br>
-                        {{ form.cardtext(size=32) }}<br>
-                    </p>
-                    <p>
-                        {{ form.htmltext.label }}<br>
-                        {{ form.htmltext(size=32) }}<br>
-                    </p>
-                    <p>
-                    <button class="btn btn-block btn-lg btn-primary mt-3" type="submit">Опубликовать объявление</button>
-                    </p>
-                </form>
-        </div>
-    </div>
-</div>
+{% block menu %} {% include 'admin/admin_menu.html' %} {% endblock %}
+{% block admin_content %}
+    <h1>Административная панель</h1>
+        <form class="form-signin" action="" method="post">
+            {{ form.csrf_token }}
+            <p> {{ form.tag.label }}<br> {{ form.tag(size=32) }}<br> </p>
+            <p> {{ form.header.label }}<br> {{ form.header(size=32) }}<br> </p>
+            <p> {{ form.url.label }}<br> {{ form.url(size=32) }}<br> </p>
+            <p> {{ form.cardtext.label }}<br> {{ form.cardtext(size=32) }}<br> </p>
+            <p> {{ form.htmltext.label }}<br> {{ form.htmltext(size=32) }}<br> </p>
+            <p>
+            <button class="btn btn-block btn-lg btn-primary mt-3" type="submit">Опубликовать объявление</button>
+            </p>
+        </form>
 {% endblock%}

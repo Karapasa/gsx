@@ -1,0 +1,8 @@
+{% extends 'admin/admin_base.html' %}
+{% block menu %} {% include 'admin/admin_menu.html' %} {% endblock %}
+{% block admin_content %}
+<h3>Данные по пользователям</h3>
+{% for user in users%}
+<p>№{{ user.id }} <strong>{{ user.login }}</strong> - <i>{{ user.apartment }}</i> <small><a href="{{ url_for(admin.user, id=user.id) }}#">(редактировать)</a></small></p>
+{% endfor %}
+{% endblock%}

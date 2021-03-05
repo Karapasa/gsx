@@ -1,0 +1,8 @@
+{% extends 'admin/admin_base.html' %}
+{% block menu %} {% include 'admin/admin_menu.html' %} {% endblock %}
+{% block admin_content %}
+<h3>Данные показания счетчиков</h3>
+{% for ind in indicators%}
+<p>{{ ind.month.strftime('%B') }} хол:{{ind.cold}} гор:{{ind.hot}} | {{ind.owner.apartment }}:{{ind.owner.login}} <small><a href="{{ url_for(admin.indicator, id=ind.id) }}">(редактировать)</a></small></p>
+{% endfor %}
+{% endblock%}

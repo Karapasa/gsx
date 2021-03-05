@@ -1,0 +1,27 @@
+{% extends 'admin/admin_base.html' %}
+{% block menu %} {% include 'admin/admin_menu.html' %} {% endblock %}
+{% block admin_content %}
+<div class="row">
+<h3>Данные пользователя №{{user.id}}:</h3>
+<form action="" method="post" id="form_admin_user">
+	<label for="form_admin_user_login"><strong>Login:</strong></label><br>
+	<input type="text" value="{{ user.login }}" id="form_admin_user_login"><br>
+
+	<label for="form_admin_user_apart"><strong>Apartment:</strong></label><br>
+	<input type="text" value="{{ user.apartment }}" id="form_admin_user_apart"><br>
+
+	<label for="form_admin_user_email"><strong>Email:</strong></label><br>
+	<input type="text" value={{user.email}} id="form_admin_user_email"><br>
+
+	<label for="form_admin_user_tel"><strong>Tel:</strong></label><br>
+	<input type="text" value="{{ user.tel }}" id="form_admin_user_tel"><br>
+
+	<input id="btn_user_admin" class="button" type="button" value="Сохранить изменения">
+</form>
+</div>
+<div class="row m-4">
+	<h3>История показаний</h3>
+	{% for ind in user.indicators %}
+	<p><strong>{{ ind.month.strftime('%d %B').title() }}</strong> - ХОЛОДНАЯ: {{ ind.cold }} | ГОРЯЧАЯ: {{ ind.hot }}</p>
+	{% endfor %}
+</div>

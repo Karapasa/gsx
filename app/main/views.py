@@ -1,8 +1,8 @@
 from app import db
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_required, current_user, logout_user
-from app.main.forms import SendEmail
-from app.models import Post, Owner
+from app.main.forms import SendEmail, SendIndicationWater
+from app.models import Post, Owner, Indicator
 from app.utils import send_mail
 from . import main
 
@@ -10,7 +10,7 @@ from . import main
 @main.route('/')
 @main.route('/index')
 def index():
-    post = db.session.query(Post).all()
+    post = db.session.query(Post).order_by(Post.id.desc()).all()
     return render_template('index.html', user=current_user, posts=post)
 
 
@@ -19,8 +19,14 @@ def index():
 def cabinet(id):
     if current_user.is_authenticated:
         if id == int(current_user.get_id()):
-            cur_user = Owner.query.filter_by(id=id).first()
-            return render_template('cabinet.html', cur_user=cur_user, user=current_user)
+            cur_user = Owner.query.get(id)
+            indicators = cur_user.indicators
+            form = SendIndicationWater()
+            if form.validate_on_submit():
+                datas = form.data
+                Indicator.save_indications(datas, id)
+                return redirect(url_for('main.cabinet', id=id))
+            return render_template('cabinet.html', cur_user=cur_user, user=current_user, form=form, indicators=indicators)
         else:
             return f"ДОСТУП ЗАПРЕЩЕН!    ТЫ ЧЕГО СЕБЕ ПОЗВОЛЯЕШЬ?!    Я ЗНАЮ ТВОЙ IP! ЗА ТОБОЙ ВЫЕХАЛИ!"
     else:
