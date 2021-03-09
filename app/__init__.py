@@ -37,6 +37,6 @@ def create_app(config_class=TestConfig):
     app.register_blueprint(auth_bp)
 
     from .admin import admin_panel as admin_bp
-    app.register_blueprint(admin_bp)
+    app.register_blueprint(admin_bp, url_prefix='/admin')
 
     return app

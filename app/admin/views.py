@@ -17,11 +17,10 @@ def admin_required(func):
             return func(*args, **kwargs)
         else:
             return redirect(url_for('auth.login'))
-
     return wrapper
 
 
-@admin_panel.route('/admin', methods=['GET', 'POST'])
+@admin_panel.route('/', methods=['GET', 'POST'])
 @admin_required
 def admin():
     form = AdminsPost()
@@ -51,22 +50,22 @@ def indicators():
     return render_template('admin/indicators.html', indicators=ind_views)
 
 
-@admin_panel.route('/post/<id>')
+@admin_panel.route('/post_view/<int:id>')
 @admin_required
-def posts(id):
+def post_view(id):
     post = Post.query.get(id)
     return render_template('admin/post.html', post=post)
 
 
-@admin_panel.route('/user/<id>')
+@admin_panel.route('/user_view/<int:id>')
 @admin_required
-def users(id):
+def user_view(id):
     user = Owner.query.get(id)
     return render_template('admin/user.html', user=user)
 
 
-@admin_panel.route('/indicator/<id>')
+@admin_panel.route('/indicator_view/<int:id>')
 @admin_required
-def indicators(id):
+def indicator_view(id):
     indicator = Indicator.query.get(id)
     return render_template('admin/indicator.html', indicator=indicator)

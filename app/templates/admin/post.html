@@ -14,15 +14,15 @@
 	<input type="text" value={{post.tag}} id="form_admin_post_tag"><br>
 
 	<label for="form_admin_post_cardtext"><strong>Превью:</strong></label><br>
-	<textarea value="{{ post.cardtext }}" id="form_admin_post_cardtext"></textarea><br>
+	<textarea id="form_admin_post_cardtext">{{ post.cardtext }}</textarea><br>
 
 	<label for="form_admin_post_html"><strong>HTML</strong></label><br>
-	<textarea value="{{ post.htmltext }}" id="form_admin_post_html"></textarea><br>
+	<textarea id="form_admin_post_html">{% autoescape false %} {{ post.htmltext }} {% endautoescape %}</textarea><br>
 
 	<label for="form_admin_post_date"><strong>Дата:</strong></label><br>
 	<input type="text" value="{{ post.date }}" id="form_admin_post_date"><br>
 
 	<input id="btn_post_admin" class="button" type="button" value="Сохранить изменения">
 </form>
-</div
+</div>
 {% endblock %}

@@ -14,7 +14,7 @@
 	<input type="text" value={{user.email}} id="form_admin_user_email"><br>
 
 	<label for="form_admin_user_tel"><strong>Tel:</strong></label><br>
-	<input type="text" value="{{ user.tel }}" id="form_admin_user_tel"><br>
+	<input type="text" value="{{ user.phone_number }}" id="form_admin_user_tel"><br>
 
 	<input id="btn_user_admin" class="button" type="button" value="Сохранить изменения">
 </form>
@@ -25,3 +25,4 @@
 	<p><strong>{{ ind.month.strftime('%d %B').title() }}</strong> - ХОЛОДНАЯ: {{ ind.cold }} | ГОРЯЧАЯ: {{ ind.hot }}</p>
 	{% endfor %}
 </div>
+{% endblock %}
