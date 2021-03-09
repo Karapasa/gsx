@@ -2,7 +2,6 @@ testdb.db
 testing.py
 test.py
 venv/
-/venv
 .env
 __pycache__/
 *.py[cod]
