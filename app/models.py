@@ -1,16 +1,21 @@
+import locale
+from datetime import datetime
 from time import time
 
 import jwt
-from flask_login import UserMixin
+import pytz
 from flask import current_app
+from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import db, loginmanager
+
 
 @loginmanager.user_loader
 def load_user(id):
     return db.session.query(Owner).get(int(id))
 
+locale.setlocale(locale.LC_ALL, 'ru_RU.UTF-8')
 
 class Owner(db.Model, UserMixin):
     __tablename__ = 'owners'
@@ -21,7 +26,7 @@ class Owner(db.Model, UserMixin):
     email = db.Column(db.String(255))
     phone_number = db.Column(db.String(255))
     role = db.Column(db.Integer(), default=0)
-    indicators = db.relationship('Indicator', backref='indicator')
+    indicators = db.relationship('Indicator', backref='owner')
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -42,12 +47,15 @@ class Owner(db.Model, UserMixin):
             return
         return Owner.query.get(id)
 
+    def __repr__(self):
+        return f'Owner {self.login}'
 
-def reg_owner(login, email, phone_number, apartment, password):
-    u = Owner(login=login, email=email, phone_number=phone_number, apartment=apartment)
-    u.set_password(password)
-    db.session.add(u)
-    db.session.commit()
+    @staticmethod
+    def reg_owner(login, email, phone_number, apartment, password):
+        u = Owner(login=login, email=email, phone_number=phone_number, apartment=apartment)
+        u.set_password(password)
+        db.session.add(u)
+        db.session.commit()
 
 
 class Indicator(db.Model):
@@ -55,17 +63,37 @@ class Indicator(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     cold = db.Column(db.Integer(), nullable=False)
     hot = db.Column(db.Integer(), nullable=False)
+    month = db.Column(db.DateTime(), default=datetime.now(tz=pytz.timezone('Europe/Moscow')))
     user_id = db.Column(db.Integer(), db.ForeignKey('owners.id'))
 
+    def __repr__(self):
+        return f'Indicators {self.id} cold{self.cold}, hot{self.hot}, month {self.month.strftime("%b")}'
+
+    @staticmethod
+    def save_indications(datas, id):
+        del datas['csrf_token']
+        del datas['submit']
+        ind = Indicator(user_id=id, **datas)
+        db.session.add(ind)
+        db.session.commit()
 
 class Post(db.Model):
     __tablename__ = 'posts'
     id = db.Column(db.Integer(), primary_key=True)
     header = db.Column(db.String(), nullable=False)
+    url = db.Column(db.String(), default=id)
+    tag = db.Column(db.Text())
+    cardtext = db.Column(db.Text())
     htmltext = db.Column(db.Text())
+    date = db.Column(db.DateTime(), default=datetime.now(tz=pytz.timezone('Europe/Moscow')))
+
+    def __repr__(self):
+        return f'Post {self.header}'
 
 
-def create_post(header, htmltext):
-    post = Post(header=header, htmltext=htmltext)
-    db.session.add(post)
-    db.session.commit()
+    @staticmethod
+    def create_post(datas):
+        del datas['csrf_token']
+        post = Post(**datas)
+        db.session.add(post)
+        db.session.commit()

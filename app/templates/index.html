@@ -1,10 +1,47 @@
 {% extends 'base.html' %}
+{% block nav %} {% include 'navpanel.html' %} {% endblock %}
 {% block content%}
-<h1>САЙТ ЖСК</h1>
-<p><a href="/login">Авторизация</a></p>
-<p><a href="/registration">Регистрация</a></p>
-<p><a href="{{ url_for('main.cabinet', id = current_user.get_id() or 0) }}">Личный кабинет</a></p>
-<p><a href="/admin">Админ панель</a></p>
-<p><a href="/send_message">Отправить письмо</a></p>
+<div class="container">
+    {% for post in posts%}
+        <div class="row m-4">
+            <div class="card p-0">
+                <h5 class="card-header bg-head text-warning">
+                    {{ post.tag }}
+                </h5>
+            <div class="card-body">
+                <h5 class="card-title">{{ post.header }}</h5>
+                <p class="card-text">{{ post.cardtext }}</p>
+                {% if post.htmltext %}
+                    <a href="{{ url_for('main.page', url=post.url) }}" class="btn btn-warning btn-sm">Подробнее</a>
+                {% endif %}
+            </div>
+            <div class="card-footer bg-white text-muted border-0">
+                {{ post.date.strftime('%d.%B %H:%m') }}
+            </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+<div class="container">
+    <div class="row m-4">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination navv">
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+    </div>
+</div>
 {% endblock%}
 

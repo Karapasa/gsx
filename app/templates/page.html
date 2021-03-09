@@ -1,4 +1,15 @@
 {% extends 'base.html' %}
+{% block nav %} {% include 'navpanel.html' %} {% endblock %}
 {% block content%}
-<h1>САЙТ ЖСК</h1>
-{% endblock%}
+<div class="container">
+        <div class="row m-4">
+                <h1>{{ post.header }}</h1>
+                <p>{{ post.cardtext }}</p>
+                <div>
+                    {% autoescape false %}
+                        {{ post.htmltext }}
+                    {% endautoescape %}
+                </div>
+        </div>
+</div>
+{% endblock %}

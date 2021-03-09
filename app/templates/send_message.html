@@ -1,19 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="container"><div class="row m-4">
     <h1>Отправить письмо администрации</h1>
     <form action="" method="post">
         {{ form.csrf_token() }}
         <p>
             {{ form.email.label }}<br>
-            {{ form.email(size=32) }}<br>
+            {{ form.email(size=32, value=user_email) }}<br>
 
         </p>
         <p>
             {{ form.text.label }}<br>
-            {{ form.text(size=32) }}<br>
+            {{ form.text(cols="35", rows="10", placeholder='Напечатайте сообщение') }}<br>
 
         </p>
         <p>{{ form.submit() }}</p>
     </form>
+</div>
+</div>
 {% endblock %}

@@ -4,6 +4,9 @@ from wtforms.validators import DataRequired
 
 
 class AdminsPost(FlaskForm):
-    head = StringField('Заголовок', validators=[DataRequired()])
-    posts_html = StringField('Объявление', validators=[DataRequired()])
-    submit = SubmitField('Опубликовать объявление')
+    tag = StringField('Тип страницы', validators=[DataRequired()])
+    header = StringField('Заголовок', validators=[DataRequired()])
+    url = StringField('URl страницы')
+    cardtext = StringField('Превью страницы', validators=[DataRequired()])
+    htmltext = StringField('Html текст страницы')
+    # submit = SubmitField('Опубликовать объявление')

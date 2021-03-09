@@ -1,8 +1,9 @@
 testdb.db
 testing.py
-/migrations
-/venv
+test.py
+venv/
 .env
 __pycache__/
 *.py[cod]
 *.pyc
+.idea/
