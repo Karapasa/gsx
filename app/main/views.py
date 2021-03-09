@@ -26,7 +26,8 @@ def cabinet(id):
                 datas = form.data
                 Indicator.save_indications(datas, id)
                 return redirect(url_for('main.cabinet', id=id))
-            return render_template('cabinet.html', cur_user=cur_user, user=current_user, form=form, indicators=indicators)
+            return render_template('cabinet.html', cur_user=cur_user, user=current_user, form=form,
+                                   indicators=indicators)
         else:
             return f"ДОСТУП ЗАПРЕЩЕН!    ТЫ ЧЕГО СЕБЕ ПОЗВОЛЯЕШЬ?!    Я ЗНАЮ ТВОЙ IP! ЗА ТОБОЙ ВЫЕХАЛИ!"
     else:
