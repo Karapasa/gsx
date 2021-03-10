@@ -1,5 +1,5 @@
 from app import db
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user, logout_user
 from app.main.forms import SendEmail, SendIndicationWater
 from app.models import Post, Owner, Indicator
@@ -10,8 +10,11 @@ from . import main
 @main.route('/')
 @main.route('/index')
 def index():
-    post = db.session.query(Post).order_by(Post.id.desc()).all()
-    return render_template('index.html', user=current_user, posts=post)
+    page = request.args.get('page', 1, type=int)
+    post = db.session.query(Post).order_by(Post.id.desc()).paginate(page, 7, False)
+    next_url = url_for('main.index', page=post.next_num) if post.has_next else None
+    prev_url = url_for('main.index', page=post.prev_num) if post.has_prev else None
+    return render_template('index.html', user=current_user, posts=post.items, prev_url=prev_url, next_url=next_url, page=page)
 
 
 @main.route('/cabinet/<int:id>', methods=['GET', 'POST'])
