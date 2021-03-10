@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
+{% block body %}onload="brython()"{% endblock %}
 {% block content%}
 <div class="container">
     <div class="row m-4">
         <h1>Личный кабинет</h1>
         <p>Ваш логин: <span id="login">{{ cur_user.login }}</span></p>
-        <p>Квартира: <span id="room">№{{ cur_user.apartment }}</span></p>
+        <p>Квартира: № <span id="room">{{ cur_user.apartment }}</span></p>
         <p>Ваш email: <span id="email">{{ cur_user.email }}</span></p>
         <p>Тел. для связи: <span id="tel">{{ cur_user.phone_number }}</span></p>
-        <p><small><a id='edit' href="#">(редактировать)</a></small></p>
+        <p id="edit"><small><a href="#">(редактировать)</a></small></p>
     </div>
     <div class="row m-4">
         <h3>Передать показания счетчиков воды:</h3>
@@ -29,3 +30,9 @@
     </div>
 </div>
 {% endblock%}
+{% block scripts%}
+{{super()}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.9.1/brython.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.9.1/brython_stdlib.js"></script>
+<script type ='text/python' src="{{url_for('static', filename='brython/brscript_cabinet.py')}}"></script>
+{% endblock %}

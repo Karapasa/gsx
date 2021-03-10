@@ -1,4 +1,5 @@
 {% extends 'admin/admin_base.html' %}
+{% block body %}onload="brython()"{% endblock %}
 {% block menu %} {% include 'admin/admin_menu.html' %} {% endblock %}
 {% block admin_content %}
 <div class="row">
@@ -18,6 +19,7 @@
 
 	<input id="btn_user_admin" class="button" type="button" value="Сохранить изменения">
 </form>
+	<p><a href="#" id="delete">удалить</a></p>
 </div>
 <div class="row m-4">
 	<h3>История показаний</h3>
@@ -25,4 +27,10 @@
 	<p><strong>{{ ind.month.strftime('%d %B').title() }}</strong> - ХОЛОДНАЯ: {{ ind.cold }} | ГОРЯЧАЯ: {{ ind.hot }}</p>
 	{% endfor %}
 </div>
+{% endblock %}
+{% block scripts %}
+{{super()}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.9.1/brython.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.9.1/brython_stdlib.js"></script>
+<script type ='text/python' src="{{url_for('static', filename='brython/brython_admin_owner.py')}}"></script>
 {% endblock %}

@@ -3,6 +3,7 @@
 {% block menu %} {% include 'admin/admin_menu.html' %} {% endblock %}
 {% block admin_content %}
     <h1>Административная панель</h1>
+    <h3>Создать страницу:</h3>
         <form class="form-signin" action="" method="post">
             {{ form.csrf_token }}
             <p> {{ form.tag.label }}<br> {{ form.tag(size=32) }}<br> </p>

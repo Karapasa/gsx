@@ -39,4 +39,7 @@ def create_app(config_class=TestConfig):
     from .admin import admin_panel as admin_bp
     app.register_blueprint(admin_bp, url_prefix='/admin')
 
+    from .api import api as api_bp
+    app.register_blueprint(api_bp, url_prefix='/api')
+
     return app

@@ -1,8 +1,10 @@
 {% extends 'admin/admin_base.html' %}
+{% block body %}onload="brython()"{% endblock %}
 {% block menu %} {% include 'admin/admin_menu.html' %} {% endblock %}
 {% block admin_content %}
 <div class="row">
-<h3>Страница №{{post.id}}:</h3>
+	<h3>Страница №{{post.id}}:</h3>
+	<p>Дата создания: {{ post.date }}</p>
 <form action="" method="post" id="form_admin_indicator">
 	<label for="form_admin_post_header"><strong>Заголовок:</strong></label><br>
 	<input type="text" value="{{ post.header }}" id="form_admin_post_header"><br>
@@ -19,10 +21,14 @@
 	<label for="form_admin_post_html"><strong>HTML</strong></label><br>
 	<textarea id="form_admin_post_html">{% autoescape false %} {{ post.htmltext }} {% endautoescape %}</textarea><br>
 
-	<label for="form_admin_post_date"><strong>Дата:</strong></label><br>
-	<input type="text" value="{{ post.date }}" id="form_admin_post_date"><br>
-
 	<input id="btn_post_admin" class="button" type="button" value="Сохранить изменения">
 </form>
+	<p><a href="#" id="delete">удалить</a></p>
 </div>
+{% endblock %}
+{% block scripts %}
+{{super()}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.9.1/brython.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.9.1/brython_stdlib.js"></script>
+<script type ='text/python' src="{{url_for('static', filename='brython/brython_admin_post.py')}}"></script>
 {% endblock %}

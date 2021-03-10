@@ -1,8 +1,10 @@
 {% extends 'admin/admin_base.html' %}
+{% block body %}onload="brython()"{% endblock %}
 {% block menu %} {% include 'admin/admin_menu.html' %} {% endblock %}
 {% block admin_content %}
 <div class="row">
 <h3>Показания №{{indicator.id}}:</h3>
+	<p>Дата создания: {{ indicator.month }}</p>
 <form action="" method="post" id="form_admin_indicator">
 	<label for="form_admin_indicator_cold"><strong>COLD:</strong></label><br>
 	<input type="text" value="{{ indicator.cold }}" id="form_admin_indicator_cold"><br>
@@ -10,13 +12,17 @@
 	<label for="form_admin_indicator_hot"><strong>HOT:</strong></label><br>
 	<input type="text" value="{{ indicator.hot }}" id="form_admin_indicator_hot"><br>
 
-	<label for="form_admin_indicator_date"><strong>DATE:</strong></label><br>
-	<input type="text" value={{indicator.month}} id="form_admin_indicator_date"><br>
-
 	<label for="form_admin_indicator_user"><strong>USER: {{indicator.owner.login}} {{indicator.owner.apartment}}</strong></label><br>
 	<input type="text" value="{{ indicator.user_id }}" id="form_admin_indicator_user"><br>
 
 	<input id="btn_indicator_admin" class="button" type="button" value="Сохранить изменения">
 </form>
+	<p><a href="#" id="delete">удалить</a></p>
 </div>
+{% endblock %}
+{% block scripts %}
+{{super()}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.9.1/brython.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.9.1/brython_stdlib.js"></script>
+<script type ='text/python' src="{{url_for('static', filename='brython/brython_admin_indicator.py')}}"></script>
 {% endblock %}
